@@ -1,0 +1,28 @@
+type Message @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: String!
+  cciCode: String!
+  companyCode: String!
+  content: AWSJSON!
+}
+
+type Query {
+  getMessage(id: String!): Message
+}
+
+type Mutation {
+  sendMessage(message: AWSJSON!): Message! @aws_iam
+}
+
+type Subscription {
+  onMessage(cciCode: String!, companyCode: String, id: String): Message
+    @aws_subscribe(mutations: ["sendMessage"])
+    @aws_api_key
+    @aws_iam
+    @aws_cognito_user_pools
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
