@@ -10,7 +10,7 @@ type Query {
 }
 
 type Mutation {
-  sendMessage(message: AWSJSON!): Message! @aws_iam
+  sendMessage(message: AWSJSON!): Message! @aws_iam @aws_api_key
 }
 
 type Subscription {
